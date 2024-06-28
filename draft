@@ -1,0 +1,28 @@
+class Solution {
+public:
+    int strangePrinter(string s) {
+        int len = s.length();
+        int wide = 'z' - 'a' + 1;
+        int str[wide];
+        int lct[wide];
+        int minus[wide];
+        for (int i = 0; i < wide; i++) str[i] = 0;
+        for (int i = 0; i < len; i++){
+            int a = s[i] - 'a';
+            str[a]++;
+            lct[a] = i; 
+        }
+        int ans = 0;
+        int last = 0;
+        for (int i = 0; i < len; i++){
+            int a = s[i] - 'a';
+            if (last < lct[a]) last = lct[a];
+            if (i != last) {
+                if (i == 0) ans++;
+                else if (s[i] != s[i - 1]) ans++;
+            }
+            else if (str[a] == 1) ans++;
+        }
+        return ans;
+    }
+};
