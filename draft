@@ -5,8 +5,10 @@ public:
         int wide = 'z' - 'a' + 1;
         int str[wide];
         int lct[wide];
-        int minus[wide];
-        for (int i = 0; i < wide; i++) str[i] = 0;
+        int count[wide];
+        for (int i = 0; i < wide; i++) {
+            count[i] = 0; str[i] = 0;
+        }
         for (int i = 0; i < len; i++){
             int a = s[i] - 'a';
             str[a]++;
@@ -16,12 +18,20 @@ public:
         int last = 0;
         for (int i = 0; i < len; i++){
             int a = s[i] - 'a';
-            if (last < lct[a]) last = lct[a];
+            if (last < lct[a]) {
+                last = lct[a];
+                count[a] = 1;    
+            }
             if (i != last) {
                 if (i == 0) ans++;
-                else if (s[i] != s[i - 1]) ans++;
+                else if ((s[i] == s[last] && count[a] != 0)){
+                    ans++;
+                }
+                else if (s[i] != s[i - 1] && s[i] != s[last]) ans++;
             }
             else if (str[a] == 1) ans++;
+            cout << last << "-----" << ans << "-----" << count[a] << endl;
+            count[a] = 0;
         }
         return ans;
     }
